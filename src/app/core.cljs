@@ -100,9 +100,14 @@
 
 ;;; Startup ;;;
 
+(defonce root
+  (rdom/createRoot (js/document.getElementById "app")))
+
+(defn render []
+  (.render root ($ main-view)))
+
 (defn ^:export init []
   (refx/clear-subscription-cache!)
   (refx/dispatch-sync [::initialize-db])
   (routes/init-routes! routes)
-  (doto (rdom/createRoot (js/document.getElementById "app"))
-    (.render ($ main-view))))
+  (render))
