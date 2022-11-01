@@ -7,6 +7,7 @@
     "release": "shadow-cljs release app"
   },
   "devDependencies": {
+    "msw": "^0.47.4",
     "shadow-cljs": "2.20.6"
   },
   "dependencies": {
@@ -14,5 +15,8 @@
     "react-dom": "^18.2.0",
     "react-refresh": "^0.14.0",
     "use-sync-external-store": "1.2.0"
+  },
+  "msw": {
+    "workerDirectory": "resources/public"
   }
 }
