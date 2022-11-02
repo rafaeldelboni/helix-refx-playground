@@ -1,38 +1,41 @@
 (ns app.auth.events
-  (:require [ajax.core :as ajax]
-            [refx.alpha :as refx]
-            [refx.http]))
+  (:require [app.http]
+            [refx.alpha :as refx]))
 
 (refx/reg-event-fx
  :app.auth/login-done
  (fn
    [{db :db} [_ response]]
-   (println response)
+   (println :success response)
    {:db (-> db
             (assoc :login-loading? false)
-            (assoc :current-user response))}))
+            (assoc :login-error nil)
+            (assoc :current-user (:body response)))}))
 
 (refx/reg-event-db
  :app.auth/login-error
  (fn
-   [db resp]
-   (println resp)
+   [db response]
+   (println :fail response)
    (-> db
        (assoc :login-loading? false)
+       (assoc :login-error response)
        (assoc :current-user nil))))
 
 (refx/reg-event-fx
  :app.auth/login
  (fn
    [{db :db} [_ login]]
-   {:http-xhrio {:method          :post
-                 :uri             "/login"
-                 :params          login
-                 :format          (ajax/json-request-format)
-                 :response-format (ajax/json-response-format {:keywords? true})
-                 :on-success      [:app.auth/login-done]
-                 :on-failure      [:app.auth/login-error]}
-    :db  (assoc db :login-loading? true)}))
+   {:http {:method      :post
+           :url         "/login"
+           :body        login
+           :accept :json
+           :content-type :json
+           :on-success  [:app.auth/login-done]
+           :on-failure  [:app.auth/login-error]}
+    :db  (assoc db
+                :login-error nil
+                :login-loading? true)}))
 
 (refx/reg-event-db
  :app.auth/logout

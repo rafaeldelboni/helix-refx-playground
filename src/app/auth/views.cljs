@@ -6,6 +6,7 @@
 
 (defnc login-view []
   (let [loading? (refx/use-sub [:app.auth/login-loading])
+        error? (refx/use-sub [:app.auth/login-error])
         [state set-state] (hooks/use-state {:username "" :password ""})]
     (d/div
      (d/form
@@ -33,4 +34,7 @@
        "Login")
 
       (when loading?
-        (d/p "Loading..."))))))
+        (d/p "Loading..."))
+
+      (when error?
+        (d/p "Error... Try again"))))))
