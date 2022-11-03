@@ -13,7 +13,7 @@
           :tests    {:target           :browser-test
                      :test-dir         "resources/public/js/test"
                      :ns-regexp        "-test$"
-                     :devtools         {:http-port 8001
+                     :devtools         {:http-port 8100
                                         :http-root "resources/public/js/test"}}
 
           :ci-tests {:target           :karma

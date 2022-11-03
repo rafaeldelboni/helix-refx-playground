@@ -4,10 +4,8 @@ Heavily inspired by [vloth/reagent-boilerplate](https://github.com/vloth/reagent
 
 ## Commands
 
-### Watch App/Tests
-The app will be hosted locally on: 
-- http://localhost:8000 for the base app
-- http://localhost:8001 for the browser tests
+### Watch
+Start shadow-cljs watching and serving main in [`localhost:8000`](http://localhost:8000) and tests in [`localhost:8100`](http://localhost:8100)
 ```bash
 npm run watch
 ```
@@ -19,7 +17,7 @@ npm run watch:app
 ```
 
 ### Tests
-Start shadow-cljs watching and serving tests in [`localhost:8001`](http://localhost:8022)
+Start shadow-cljs watching and serving tests in [`localhost:8100`](http://localhost:8100)
 ```bash
 npm run watch:tests
 ```
