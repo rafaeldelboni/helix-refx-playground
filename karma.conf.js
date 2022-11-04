@@ -4,7 +4,7 @@ module.exports = function (config) {
         // The directory where the output file lives
         basePath: 'resources/test',
         // The file itself
-        files: ['ci.js'],
+        files: ['ci.js', 'mockServiceWorker.js'],
         frameworks: ['cljs-test'],
         plugins: ['karma-cljs-test', 'karma-chrome-launcher'],
         colors: true,
@@ -14,7 +14,7 @@ module.exports = function (config) {
             singleRun: true
         },
         proxies: {
-            '/mockServiceWorker.js': '/mockServiceWorker.js',
+            '/mockServiceWorker.js': '/base/mockServiceWorker.js',
         }
     })
 };
