@@ -1,7 +1,7 @@
 node_modules/
 resources/public/js
-resources/test/ci.js
-resources/test/js
+resources/test
+!resources/test/mockServiceWorker.js
 
 /target
 /checkouts
