@@ -2,7 +2,7 @@ module.exports = function (config) {
     config.set({
         browsers: ['ChromiumHeadless'],
         // The directory where the output file lives
-        basePath: 'target',
+        basePath: 'resources/test',
         // The file itself
         files: ['ci.js'],
         frameworks: ['cljs-test'],
@@ -12,6 +12,9 @@ module.exports = function (config) {
         client: {
             args: ["shadow.test.karma.init"],
             singleRun: true
+        },
+        proxies: {
+            '/mockServiceWorker.js': '/mockServiceWorker.js',
         }
     })
 };

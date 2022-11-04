@@ -1,5 +1,7 @@
 node_modules/
 resources/public/js
+resources/test/ci.js
+resources/test/js
 
 /target
 /checkouts
@@ -22,3 +24,4 @@ pom.xml.asc
 
 .hgignore
 .hg/
+

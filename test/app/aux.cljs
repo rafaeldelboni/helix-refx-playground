@@ -2,19 +2,25 @@
   (:require ["@testing-library/react" :as tlr]
             [helix.core :refer [$]]))
 
+(def wait-for tlr/waitFor)
+
 (defn text [el]
   (.-textContent el))
 
 (defn length [el]
   (.-length el))
 
-(defn get-class
-  [^js/Element el]
-  (.toString (.-classList el)))
+(defn find-by-text
+  [el text]
+  (.findByText el text))
 
 (defn click
   [^js/Element el]
   (.click tlr/fireEvent el))
+
+(defn change
+  [^js/Element el value]
+  (.change tlr/fireEvent el (clj->js {:target {:value value}})))
 
 (defn tag
   [element tag-name]

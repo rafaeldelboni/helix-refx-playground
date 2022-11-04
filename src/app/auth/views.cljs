@@ -19,7 +19,8 @@
 
       (d/label "Username")
       (d/input
-       {:value (:username state)
+       {:id "login-username"
+        :value (:username state)
         :disabled loading?
         :on-change #(set-state assoc :username (.. % -target -value))})
 

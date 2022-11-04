@@ -11,12 +11,12 @@
                      :release           {:modules {:core {:init-fn app.core/init}}}}
 
           :tests    {:target           :browser-test
-                     :test-dir         "resources/public/js/test"
+                     :test-dir         "resources/test"
                      :ns-regexp        "-test$"
                      :devtools         {:http-port 8100
-                                        :http-root "resources/public/js/test"}}
+                                        :http-root "resources/test"}}
 
           :ci-tests {:target           :karma
-                     :output-to        "target/ci.js"
+                     :output-to        "resources/test/ci.js"
                      :ns-regexp        "-test$"
                      :compiler-options {:static-fns false}}}}
