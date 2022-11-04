@@ -1,4 +1,4 @@
-(ns app.integration.login-view-test
+(ns app.integration.auth-view-test
   (:require [app.auth.events]
             [app.auth.subs]
             [app.auth.views :as auth.views]
@@ -7,7 +7,7 @@
             [dev.msw.browser :as msw]
             [promesa.core :as p]))
 
-(deftest login-view-test
+(deftest auth-view-test
   (async done
     (p/do
       (aux/wait-for
