@@ -5,7 +5,7 @@
   (if (= (-> req .-body .-username) "err@ee.cc")
     (apply
      res
-     [(.delay ctx 1000)
+     [(.delay ctx 500)
       (.status ctx 500)
       (.json ctx (clj->js {:ok false}))])
     (apply

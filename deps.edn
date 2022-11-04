@@ -1,4 +1,4 @@
-{:paths   ["src" "public"]
+{:paths   ["src" "resources"]
  :deps    {refx/core {:git/url "https://github.com/ferdinand-beyer/refx.git"
                       :git/sha "bdfbb4401a2fcc1258ecc3544e0e290548fc3ea3"
                       :deps/root "core"}
@@ -7,5 +7,6 @@
            metosin/reitit-frontend {:mvn/version "0.5.18"}
            funcool/promesa {:mvn/version "9.0.494"}
            lambdaisland/fetch {:mvn/version "1.1.60"}}
- :aliases {:dev {:extra-deps  {thheller/shadow-cljs {:mvn/version "2.20.6"}
-                               cider/cider-nrepl    {:mvn/version "0.28.6"}}}}}
+ :aliases {:dev {:extra-paths ["test"]
+                 :extra-deps  {thheller/shadow-cljs {:mvn/version "2.20.7"}
+                               cider/cider-nrepl    {:mvn/version "0.28.7"}}}}}

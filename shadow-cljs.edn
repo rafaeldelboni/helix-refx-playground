@@ -1,10 +1,22 @@
 ;; shadow-cljs configuration
-{:deps     {:aliases [:dev]}
- :dev-http {8000 "resources/public"}
- :builds   {:app {:target     :browser
-                  :output-dir "resources/public/js"
-                  :asset-path "/js"
-                  :devtools   {:reload-strategy :full
-                               :preloads [dev.refresh]}
-                  :dev {:modules {:core {:init-fn dev.core/init}}}
-                  :release {:modules {:core {:init-fn app.core/init}}}}}}
+{:deps   {:aliases [:dev]}
+ :builds {:app      {:target           :browser
+                     :output-dir       "resources/public/js"
+                     :asset-path       "/js"
+                     :devtools         {:http-port 8000
+                                        :http-root "resources/public"
+                                        :reload-strategy :full
+                                        :preloads [dev.refresh]}
+                     :dev               {:modules {:core {:init-fn dev.core/init}}}
+                     :release           {:modules {:core {:init-fn app.core/init}}}}
+
+          :tests    {:target           :browser-test
+                     :test-dir         "resources/test"
+                     :ns-regexp        "-test$"
+                     :devtools         {:http-port 8100
+                                        :http-root "resources/test"}}
+
+          :ci-tests {:target           :karma
+                     :output-to        "resources/test/ci.js"
+                     :ns-regexp        "-test$"
+                     :compiler-options {:static-fns false}}}}

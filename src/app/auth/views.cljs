@@ -19,7 +19,8 @@
 
       (d/label "Username")
       (d/input
-       {:value (:username state)
+       {:id "login-username"
+        :value (:username state)
         :disabled loading?
         :on-change #(set-state assoc :username (.. % -target -value))})
 
@@ -34,7 +35,11 @@
        "Login")
 
       (when loading?
-        (d/p "Loading..."))
+        (d/p
+         {:id "login-loading"}
+         "Loading..."))
 
       (when error?
-        (d/p "Error... Try again"))))))
+        (d/p
+         {:id "login-error"}
+         "Error... Try again"))))))
