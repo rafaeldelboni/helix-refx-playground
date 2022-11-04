@@ -34,7 +34,11 @@
        "Login")
 
       (when loading?
-        (d/p "Loading..."))
+        (d/p
+         {:id "login-loading"}
+         "Loading..."))
 
       (when error?
-        (d/p "Error... Try again"))))))
+        (d/p
+         {:id "login-error"}
+         "Error... Try again"))))))

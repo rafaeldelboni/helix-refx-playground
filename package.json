@@ -10,6 +10,7 @@
     "release": "shadow-cljs release app"
   },
   "devDependencies": {
+    "@testing-library/react": "^13.4.0",
     "karma": "^6.4.1",
     "karma-chrome-launcher": "^3.1.1",
     "karma-cljs-test": "^0.1.0",
