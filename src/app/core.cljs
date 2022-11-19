@@ -51,7 +51,6 @@
   (let [{:keys [username] :as user} (refx/use-sub [:app.auth/current-user])
         match (refx/use-sub [:app.routes/current-route])
         route-data (:data match)]
-    (println user)
     (d/div
      (d/ul
       (d/li (d/a {:href (rfe/href ::frontpage)} "Frontpage"))
