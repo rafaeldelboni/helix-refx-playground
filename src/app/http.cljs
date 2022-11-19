@@ -1,13 +1,14 @@
 (ns app.http
   (:require [lambdaisland.fetch :as fetch]
+            [promesa.core :as p]
             [refx.alpha :refer [dispatch reg-fx]]))
 
 (defn- js->cljs-key [obj]
   (js->clj obj :keywordize-keys true))
 
 (defn- send-request!
-  [{:keys [url on-success on-failure] :as request}]
-  (-> (fetch/request url request)
+  [{:keys [url on-success on-failure] :as request} fn-request]
+  (-> (fn-request url request)
       (.then (fn [{:keys [status] :as resp}]
                (if (> status 400)
                  (dispatch (conj on-failure (js->cljs-key resp)))
@@ -16,10 +17,26 @@
                 (dispatch (conj on-failure (js->cljs-key resp)))))))
 
 (defn http-effect
-  [request]
-  (if (sequential? request)
-    (doseq [r request]
-      (send-request! r))
-    (send-request! request)))
+  [fn-request]
+  (fn [request]
+    (if (sequential? request)
+      (doseq [req request]
+        (send-request! req fn-request))
+      (send-request! request fn-request))))
 
-(reg-fx :http http-effect)
+(defn fetch-request-mock [responses]
+  (fn [url _request]
+    (let [{:keys [lag] :as response} (get-in responses
+                                             [url]
+                                             {:status 500
+                                              :body "Response not set in mocks!"})]
+      (p/delay (or lag 100) response))))
+
+(reg-fx :http (http-effect fetch/request))
+
+(comment
+  ; is possible to mock directly this effect
+  (reg-fx
+   :http (http-effect (fetch-request-mock
+                       {"/login/send-email" {:status 201
+                                             :body #js {:ok true}}}))))

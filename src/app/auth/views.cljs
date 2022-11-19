@@ -42,4 +42,4 @@
       (when error?
         (d/p
          {:id "login-error"}
-         "Error... Try again"))))))
+         "Error... try it again."))))))

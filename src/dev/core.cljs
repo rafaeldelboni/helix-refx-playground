@@ -1,6 +1,6 @@
 (ns dev.core
   (:require [app.core :as app]
-            [dev.msw.browser :as browser]
+            [dev.msw.core :as mock]
             [promesa.core :as p]))
 
 (def debug? ^boolean goog.DEBUG)
@@ -11,15 +11,15 @@
     (println "dev mode")))
 
 (defn ^:export init []
-  (p/do (browser/init!)
+  (p/do (mock/init!)
         (dev-setup)
         (app/init)))
 
 (comment
   "Start mock service worker"
-  (p/do (browser/start!)
+  (p/do (mock/start!)
         (.reload js/location))
 
   "Stop mock service worker"
-  (p/do (browser/stop!)
+  (p/do (mock/stop!)
         (.reload js/location)))

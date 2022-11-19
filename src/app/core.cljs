@@ -51,6 +51,7 @@
   (let [{:keys [username] :as user} (refx/use-sub [:app.auth/current-user])
         match (refx/use-sub [:app.routes/current-route])
         route-data (:data match)]
+    (println user)
     (d/div
      (d/ul
       (d/li (d/a {:href (rfe/href ::frontpage)} "Frontpage"))
@@ -106,8 +107,11 @@
 (defn render []
   (.render root ($ main-view)))
 
-(defn ^:export init []
+(defn setup! []
   (refx/clear-subscription-cache!)
   (refx/dispatch-sync [::initialize-db])
-  (routes/init-routes! routes)
+  (routes/init-routes! routes))
+
+(defn ^:export init []
+  (setup!)
   (render))
