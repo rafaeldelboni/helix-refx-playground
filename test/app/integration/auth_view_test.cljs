@@ -18,10 +18,10 @@
 
 (use-fixtures :each
   {:before #(async done
-                   (refx/clear-subscription-cache!)
-                   (refx/dispatch-sync [:test/initialize-db])
-                   (aux/cleanup)
-                   (done))})
+              (refx/clear-subscription-cache!)
+              (refx/dispatch-sync [:test/initialize-db])
+              (aux/cleanup)
+              (done))})
 
 (def login-error-msw
   {"/login"
@@ -30,17 +30,27 @@
            :content-type :json
            :body #js {:ok false}}}})
 
+(defn login-input-send [input-text container]
+  (p/do
+    (aux/wait-for #(-> container
+                       (aux/query "#login-username")
+                       (aux/change input-text)))
+    (aux/wait-for #(-> container
+                       (aux/tag "button")
+                       first aux/click))))
+
+(defn get-login-error-msg [container]
+  (aux/wait-for #(-> container
+                     (aux/query "#login-error")
+                     aux/text)))
+
 (deftest auth-view-email-send-error-test
   (testing "auth email send view should error"
     (async done
-           (p/let [_ (mock/start! login-error-msw)
-                   render (-> auth.views/login-view aux/render)
-                   container (.-container render)
-                   button (-> container (aux/tag "button") first)
-                   input (-> container (aux/query "#login-username"))
-                   _change (aux/wait-for #(-> input (aux/change "err@ee.cc")))
-                   _click (aux/wait-for #(-> button aux/click))
-                   error-msg (aux/wait-for #(-> container (aux/query "#login-error") aux/text))]
-             (is (= "Error... try it again." error-msg))
-             (aux/cleanup)
-             (done)))))
+      (p/let [_ (mock/start! login-error-msw)
+              container (-> auth.views/login-view aux/render .-container)
+              _input (login-input-send "email@email.com" container)
+              error-msg (get-login-error-msg container)]
+        (is (= "Error... try it again." error-msg))
+        (aux/cleanup)
+        (done)))))
