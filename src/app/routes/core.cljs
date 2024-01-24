@@ -7,8 +7,8 @@
 (defn router [routes]
   (rf/router
    routes
-   {:data {:controllers [{:start (js/console.log "start" "root-controller")
-                          :stop (js/console.log "stop" "root controller")}]
+   {:data {:controllers [{:start #(js/console.log "start" "root controller")
+                          :stop #(js/console.log "stop" "root controller")}]
            :coercion rsc/coercion
            :public? false}}))
 

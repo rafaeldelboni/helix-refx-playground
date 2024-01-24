@@ -28,7 +28,7 @@ jobs:
     - name: Install clojure cli
       uses: DeLaGuardo/setup-clojure@master
       with:
-        cli: 1.11.1.1177
+        cli: 1.11.1.1435
 
     - name: Build ${{ matrix.node-version }}
       uses: actions/setup-node@v3
